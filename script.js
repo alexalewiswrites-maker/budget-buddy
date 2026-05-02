@@ -55,16 +55,19 @@ const entryDate = new Date(entry.date + "T00:00:00");
     }
 
     // Daily totals
-    if (entry.type === "expense") {
-      dailyTotals[entry.date] =
-        (dailyTotals[entry.date] || 0) + entry.amount;
-    }
+    if (!dailyTotals[entry.date]) {
+  dailyTotals[entry.date] = 0;
+}
+
+// income adds, expenses subtract → net per day
+dailyTotals[entry.date] +=
+  entry.type === "income" ? entry.amount : -entry.amount;
   });
 
   const balance = income - expenses;
 
   document.getElementById("summary").textContent =
-    `Month: Income $${income} | Expenses $${expenses} | Balance $${balance}`;
+  `💰 Income: $${income} | 💸 Expenses: $${expenses} | 🟢 Balance: $${balance}`;
 
   // Suggestions
   let suggestion = "";
