@@ -1,0 +1,45 @@
+body {
+  background: #1b1b2f;
+  color: #fff;
+  font-family: "Courier New", monospace;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  image-rendering: pixelated;
+}
+
+.app {
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+}
+
+h1 {
+  text-shadow: 3px 3px #ff8fab;
+}
+
+.card {
+  background: #162447;
+  border: 3px solid #ff8fab;
+  margin: 15px 0;
+  padding: 15px;
+  box-shadow: 4px 4px #1f4068;
+}
+
+input, select, button {
+  margin: 5px;
+  padding: 8px;
+  border: none;
+  font-family: inherit;
+}
+
+button {
+  background: #ff8fab;
+  color: black;
+  cursor: pointer;
+}
+
+canvas {
+  background: #fff;
+  margin-top: 10px;
+}
