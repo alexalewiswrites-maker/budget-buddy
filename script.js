@@ -9,6 +9,7 @@ function addEntry() {
   const type = document.getElementById("type").value;
   const category = document.getElementById("category").value || "other";
   const date = document.getElementById("date").value;
+  console.log("Entry added:", { amount, type, category, date });
 
   if (!amount || !date) return alert("Enter valid data");
 
@@ -39,8 +40,8 @@ function updateUI() {
   const dailyTotals = {};
 
   data.forEach(entry => {
-    const entryDate = new Date(entry.date);
-
+const entryDate = new Date(entry.date + "T00:00:00");
+    
     // Monthly filter
     if (entryDate.getMonth() === currentMonth) {
       if (entry.type === "income") income += entry.amount;
@@ -84,9 +85,11 @@ function updateUI() {
 let pieChart, barChart;
 
 function renderPieChart(dataObj) {
-  const ctx = document.getElementById("pieChart");
+  const ctx = document.getElementById("pieChart").getContext("2d");
 
-  if (pieChart) pieChart.destroy();
+  if (pieChart) {
+    pieChart.destroy();
+  }
 
   pieChart = new Chart(ctx, {
     type: "pie",
@@ -96,27 +99,38 @@ function renderPieChart(dataObj) {
         data: Object.values(dataObj),
         backgroundColor: [
           "#ff8fab", "#ffc6ff", "#bde0fe",
-          "#caffbf", "#ffd6a5"
+          "#caffbf", "#ffd6a5", "#a0c4ff"
         ]
       }]
+    },
+    options: {
+      animation: false
     }
   });
 }
 
 function renderBarChart(dataObj) {
-  const ctx = document.getElementById("barChart");
+  const ctx = document.getElementById("barChart").getContext("2d");
 
-  if (barChart) barChart.destroy();
+  if (barChart) {
+    barChart.destroy();
+  }
+
+  // 🔥 sort dates so chart doesn't look broken
+  const sortedDates = Object.keys(dataObj).sort();
 
   barChart = new Chart(ctx, {
     type: "bar",
     data: {
-      labels: Object.keys(dataObj),
+      labels: sortedDates,
       datasets: [{
         label: "Daily Spending",
-        data: Object.values(dataObj),
+        data: sortedDates.map(d => dataObj[d]),
         backgroundColor: "#ff8fab"
       }]
+    },
+    options: {
+      animation: false
     }
   });
 }
