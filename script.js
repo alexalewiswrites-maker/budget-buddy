@@ -9,15 +9,49 @@ function addEntry() {
   const type = document.getElementById("type").value;
   const category = document.getElementById("category").value || "other";
   const date = document.getElementById("date").value;
-  console.log("Entry added:", { amount, type, category, date });
 
   if (!amount || !date) return alert("Enter valid data");
 
-  data.push({ amount, type, category, date });
+  data.push({
+    id: Date.now(),   // ✅ unique id
+    amount,
+    type,
+    category,
+    date
+  });
+
   saveData();
   updateUI();
 }
+function deleteEntry(id) {
+  data = data.filter(entry => entry.id !== id);
+  saveData();
+  updateUI();
+}
+function renderEntryList() {
+  const container = document.getElementById("entryList");
+  if (!container) return;
 
+  container.innerHTML = "";
+
+  data
+    .slice()
+    .reverse()
+    .forEach(entry => {
+      const div = document.createElement("div");
+      div.className = "entry-item";
+
+      div.innerHTML = `
+        <span>
+          <b>${entry.type.toUpperCase()}</b> - $${entry.amount} 
+          (${entry.category}) on ${entry.date}
+        </span>
+        <button onclick="deleteEntry(${entry.id})">❌</button>
+      `;
+
+      container.appendChild(div);
+    });
+}
 function getCurrentMonth() {
   const now = new Date();
   return now.getMonth();
@@ -83,6 +117,7 @@ dailyTotals[entry.date] +=
 
   renderPieChart(categoryTotals);
   renderBarChart(dailyTotals);
+  renderEntryList();
 }
 
 let pieChart, barChart;
