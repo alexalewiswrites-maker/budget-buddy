@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pixel Finance Tracker</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="app">
+    <h1>💰 Pixel Finance</h1>
+
+    <div class="card">
+      <h2>Add Entry</h2>
+      <input type="number" id="amount" placeholder="Amount">
+      <select id="type">
+        <option value="expense">Expense</option>
+        <option value="income">Income</option>
+      </select>
+
+      <input type="text" id="category" placeholder="Category (food, rent, etc)">
+      <input type="date" id="date">
+      <button onclick="addEntry()">Add</button>
+    </div>
+
+    <div class="card">
+      <h2>Insights</h2>
+      <p id="summary"></p>
+      <p id="suggestions"></p>
+    </div>
+
+    <div class="card">
+      <h2>Spending by Category</h2>
+      <canvas id="pieChart"></canvas>
+    </div>
+
+    <div class="card">
+      <h2>Daily Spending</h2>
+      <canvas id="barChart"></canvas>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
